@@ -1,0 +1,77 @@
+o get Python 3.12 stable version on RHEL (Red Hat Enterprise Linux), follow these steps:
+
+Step 1: Enable the EPEL and RHSCL Repositories
+First, you need to enable the EPEL (Extra Packages for Enterprise Linux) and RHSCL (Red Hat Software Collections) repositories, as Python 3.12 may not be available in the default RHEL repositories.
+
+Enable EPEL:
+
+bash
+Copy code
+sudo yum install epel-release -y
+Enable RHSCL (if not already enabled):
+
+bash
+Copy code
+sudo yum-config-manager --enable rhel-server-rhscl-7-rpms  # For RHEL 7
+sudo yum-config-manager --enable rhel-8-appstream-rpms      # For RHEL 8
+Step 2: Install Python 3.12 from Source
+As of now, Python 3.12 may not yet be available in the standard repositories for RHEL, so you’ll need to compile it from source.
+
+Install Required Development Tools:
+
+You need to install some tools and libraries required to build Python from source.
+
+bash
+Copy code
+sudo yum groupinstall "Development Tools" -y
+sudo yum install wget gcc openssl-devel bzip2-devel libffi-devel -y
+Download Python 3.12 Source:
+
+Download the stable release of Python 3.12 from the official Python website.
+
+bash
+Copy code
+wget https://www.python.org/ftp/python/3.12.0/Python-3.12.0.tgz
+Extract the Source Code:
+
+Extract the downloaded tarball.
+
+bash
+Copy code
+tar -xvf Python-3.12.0.tgz
+cd Python-3.12.0
+Build and Install Python 3.12:
+
+Run the following commands to build and install Python 3.12.
+
+bash
+Copy code
+./configure --enable-optimizations
+make
+sudo make altinstall
+The --enable-optimizations flag enables several optimizations to make Python faster, but it will make the installation process take longer.
+
+Note: Use make altinstall instead of make install to avoid overwriting the default system Python.
+
+Verify the Installation:
+
+After the installation, check the Python version to verify that Python 3.12 is installed.
+
+bash
+Copy code
+python3.12 --version
+Step 3: Set Python 3.12 as the Default Version (Optional)
+If you want to use Python 3.12 as the default version, you can update the alternatives system.
+
+Set Python 3.12 as an alternative:
+
+bash
+Copy code
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.12 1
+Verify Python Version:
+
+Check to ensure Python 3.12 is the default version.
+
+bash
+Copy code
+python3 --version
